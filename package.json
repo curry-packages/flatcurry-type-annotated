@@ -1,0 +1,36 @@
+{
+    "name": "flatcurry-type-annotated",
+    "version": "3.3.0",
+    "author": "Michael Hanus <mh@informatik.uni-kiel.de>",
+    "synopsis": "Libraries to read and write FlatCurry programs with type annotations",
+    "category": [ "Metaprogramming" ],
+    "description": "This package contain libraries to read and write FlatCurry programs with type annotations. Furthermore, it contains libraries to annotate each expression occurring in a given FlatCurry program with type information.",
+    "license": "BSD-3-Clause",
+    "licenseFile": "LICENSE",
+    "dependencies": {
+        "base"               : ">= 3.0.0, < 4.0.0",
+        "currypath"          : ">= 3.0.0, < 4.0.0",
+        "directory"          : ">= 3.0.0, < 4.0.0",
+        "containers"         : ">= 3.0.0, < 4.0.0",
+        "extra"              : ">= 3.0.0, < 4.0.0",
+        "filepath"           : ">= 3.0.0, < 4.0.0",
+        "flatcurry"          : ">= 3.0.0, < 4.0.0",
+        "flatcurry-annotated": ">= 3.3.0, < 4.0.0",
+        "frontend-exec"      : ">= 3.3.0, < 4.0.0",
+        "read-legacy"        : ">= 3.0.0, < 4.0.0",
+        "rewriting"          : ">= 3.0.0, < 4.0.0",
+        "scc"                : ">= 3.0.0, < 4.0.0",
+        "transformers"       : ">= 3.0.0, < 4.0.0"
+    },
+    "compilerCompatibility": {
+        "pakcs": ">= 3.3.0, < 4.0.0",
+        "kics2": ">= 3.0.0, < 4.0.0"
+    },
+    "exportedModules": [ "FlatCurry.TypeAnnotated.Files",
+                         "FlatCurry.TypeAnnotated.TypeSubst",
+                         "FlatCurry.TypeAnnotated.TypeInference" ],
+    "source": {
+        "git": "https://git.ps.informatik.uni-kiel.de/curry-packages/flatcurry-type-annotated.git",
+        "tag": "$version"
+    }
+}
