@@ -8,6 +8,8 @@
 
 module FlatCurry.TypeAnnotated.Files where
 
+import Data.List           ( isSuffixOf )
+import Data.Maybe          ( isNothing )
 import System.FilePath     ( takeFileName, (</>), (<.>) )
 import System.Directory    ( doesFileExist, getFileWithSuffix )
 import System.FrontendExec ( FrontendParams, FrontendTarget (..), defaultParams
@@ -15,7 +17,6 @@ import System.FrontendExec ( FrontendParams, FrontendTarget (..), defaultParams
                            , callFrontend, callFrontendWithParams )
 import System.CurryPath    ( lookupModuleSourceInLoadPath, getLoadPathForModule
                            , inCurrySubdir, stripCurrySuffix )
-import Data.Maybe          ( isNothing )
 import ReadShowTerm        ( readUnqualifiedTerm, showTerm )
 import FlatCurry.Annotated.Types
 
@@ -83,14 +84,17 @@ readTypeAnnotatedFlatCurryFile filename = do
                               filecontents)
  where
   readTypeAnnotatedFlatCurryFileRaw fname = do
-    extfcy <- doesFileExist fname
-    if extfcy
+    extafcy <- doesFileExist fname
+    if extafcy
       then readFile fname
       else do
-        let subdirfilename = inCurrySubdir fname
-        exdirtfcy <- doesFileExist subdirfilename
-        if exdirtfcy
-          then readFile subdirfilename
+        -- for compatibility between pakcs3 (use .tafcy) and kics3 (use .afcy):
+        let afcyfname = if ".tafcy" `isSuffixOf` fname
+                          then take (length fname - 5) fname ++ "afcy"
+                          else afcyfname
+        exafcy <- doesFileExist afcyfname
+        if exafcy
+          then readFile afcyfname
           else error $ "EXISTENCE ERROR: Typed FlatCurry file '" ++
                        fname ++ "' does not exist"
 
