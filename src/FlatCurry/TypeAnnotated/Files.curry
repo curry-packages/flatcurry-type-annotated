@@ -3,7 +3,7 @@
 --- type-annotated FlatCurry programs.
 ---
 --- @author Michael Hanus
---- @version December 2020
+--- @version February 2022
 ------------------------------------------------------------------------------
 
 module FlatCurry.TypeAnnotated.Files where
@@ -25,7 +25,7 @@ import FlatCurry.Annotated.Types
 --- corresponding type-annotated FlatCurry program.
 typeAnnotatedFlatCurryFileName :: String -> String
 typeAnnotatedFlatCurryFileName prog =
-  inCurrySubdir (stripCurrySuffix prog) <.> "tafcy"
+  inCurrySubdir (stripCurrySuffix prog) <.> "afcy"
 
 --- Gets the standard type-annotated FlatCurry file location
 --- for a given Curry module name.
@@ -71,7 +71,7 @@ readTypeAnnotatedFlatCurryWithParseOptions progname options = do
       readTypeAnnotatedFlatCurryFile
         (typeAnnotatedFlatCurryFileName (dir </> takeFileName progname))
 
---- Reads a type-annotated FlatCurry program from a file in `.tafcy` format
+--- Reads a type-annotated FlatCurry program from a file in `.afcy` format
 --- where the file name is provided as the argument.
 readTypeAnnotatedFlatCurryFile :: String -> IO (AProg TypeExpr)
 readTypeAnnotatedFlatCurryFile filename = do
@@ -84,21 +84,13 @@ readTypeAnnotatedFlatCurryFile filename = do
                               filecontents)
  where
   readTypeAnnotatedFlatCurryFileRaw fname = do
-    extafcy <- doesFileExist fname
-    if extafcy
+    exafcy <- doesFileExist fname
+    if exafcy
       then readFile fname
-      else do
-        -- for compatibility between pakcs3 (use .tafcy) and kics3 (use .afcy):
-        let afcyfname = if ".tafcy" `isSuffixOf` fname
-                          then take (length fname - 5) fname ++ "afcy"
-                          else afcyfname
-        exafcy <- doesFileExist afcyfname
-        if exafcy
-          then readFile afcyfname
-          else error $ "EXISTENCE ERROR: Typed FlatCurry file '" ++
-                       fname ++ "' does not exist"
+      else error $ "EXISTENCE ERROR: Typed FlatCurry file '" ++
+                   fname ++ "' does not exist"
 
---- Writes a type-annotated FlatCurry program into a file in `.tafcy` format.
+--- Writes a type-annotated FlatCurry program into a file in `.afcy` format.
 --- The file is written in the standard location for intermediate files,
 --- i.e., in the 'typeAnnotatedFlatCurryFileName' relative to the directory
 --- of the Curry source program (which must exist!).
@@ -107,9 +99,9 @@ writeTypeAnnotatedFlatCurry prog@(AProg mname _ _ _ _) = do
   fname <- typeAnnotatedFlatCurryFilePath mname
   writeTypeAnnotatedFlatCurryFile fname prog
 
---- Writes a type-annotated FlatCurry program into a file in ".tafcy" format.
+--- Writes a type-annotated FlatCurry program into a file in ".afcy" format.
 --- The first argument must be the name of the target file
---- (with suffix `.tafcy`).
+--- (with suffix `.afcy`).
 writeTypeAnnotatedFlatCurryFile :: String -> AProg TypeExpr -> IO ()
 writeTypeAnnotatedFlatCurryFile file prog = writeFile file (showTerm prog)
 
