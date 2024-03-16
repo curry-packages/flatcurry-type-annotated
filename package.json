@@ -31,7 +31,7 @@
                          "FlatCurry.TypeAnnotated.TypeSubst",
                          "FlatCurry.TypeAnnotated.TypeInference" ],
     "source": {
-        "git": "https://git.ps.informatik.uni-kiel.de/curry-packages/flatcurry-type-annotated.git",
+        "git": "https://github.com/curry-packages/flatcurry-type-annotated.git",
         "tag": "$version"
     }
 }
