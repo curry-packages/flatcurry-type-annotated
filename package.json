@@ -1,6 +1,6 @@
 {
     "name": "flatcurry-type-annotated",
-    "version": "3.4.0",
+    "version": "4.0.0",
     "author": "Michael Hanus <mh@informatik.uni-kiel.de>",
     "synopsis": "Libraries to read and write FlatCurry programs with type annotations",
     "category": [ "Metaprogramming" ],
@@ -18,7 +18,7 @@
         "flatcurry-annotated": ">= 3.3.0, < 4.0.0",
         "frontend-exec"      : ">= 3.3.0, < 4.0.0",
         "read-legacy"        : ">= 3.0.0, < 4.0.0",
-        "rewriting"          : ">= 3.0.0, < 4.0.0",
+        "rewriting"          : ">= 4.0.0",
         "scc"                : ">= 3.0.0, < 4.0.0",
         "transformers"       : ">= 3.0.0, < 4.0.0"
     },
