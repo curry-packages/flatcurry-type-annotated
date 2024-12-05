@@ -3,7 +3,7 @@
 --- type-annotated FlatCurry programs.
 ---
 --- @author Michael Hanus
---- @version February 2022
+--- @version December 2024
 ------------------------------------------------------------------------------
 {-# LANGUAGE CPP #-}
 
