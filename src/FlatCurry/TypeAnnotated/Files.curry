@@ -5,6 +5,7 @@
 --- @author Michael Hanus
 --- @version February 2022
 ------------------------------------------------------------------------------
+{-# LANGUAGE CPP #-}
 
 module FlatCurry.TypeAnnotated.Files where
 
@@ -76,12 +77,13 @@ readTypeAnnotatedFlatCurryWithParseOptions progname options = do
 readTypeAnnotatedFlatCurryFile :: String -> IO (AProg TypeExpr)
 readTypeAnnotatedFlatCurryFile filename = do
   filecontents <- readTypeAnnotatedFlatCurryFileRaw filename
-  -- ...with generated Read class instances (slow!):
-  --return (read filecontents)
-  -- ...with built-in generic read operation (faster):
+#ifdef  __KMCC__
+  return (read filecontents)
+#else
   return (readUnqualifiedTerm ["FlatCurry.Annotated.Types", "FlatCurry.Types",
                                "Prelude"]
                               filecontents)
+#endif
  where
   readTypeAnnotatedFlatCurryFileRaw fname = do
     exafcy <- doesFileExist fname
@@ -103,5 +105,10 @@ writeTypeAnnotatedFlatCurry prog@(AProg mname _ _ _ _) = do
 --- The first argument must be the name of the target file
 --- (with suffix `.afcy`).
 writeTypeAnnotatedFlatCurryFile :: String -> AProg TypeExpr -> IO ()
-writeTypeAnnotatedFlatCurryFile file prog = writeFile file (showTerm prog)
+writeTypeAnnotatedFlatCurryFile file prog =
+#ifdef  __KMCC__
+  writeFile file (show prog)
+#else
+  writeFile file (showTerm prog)
+#endif
 
